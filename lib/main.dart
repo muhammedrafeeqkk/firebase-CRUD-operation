@@ -64,7 +64,7 @@ class _mainScreenState extends State<mainScreen> {
                 ),
                 label: ''),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.update), label: '')
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: '')
           ],
           currentIndex: cindex,
           onTap: currentIndex,

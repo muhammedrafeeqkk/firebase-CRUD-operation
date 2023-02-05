@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_sample/presentation/EditScreen.dart';
 import 'package:firebase_sample/presentation/addScreen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -28,7 +29,7 @@ class UseerScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      child: Text('${users[index].age}'),
+                      backgroundImage: NetworkImage(users[index].imageUrl),
                     ),
                     title: Text(users[index].name),
                     subtitle: Text('${users[index].phone}'),
@@ -58,8 +59,18 @@ class UseerScreen extends StatelessWidget {
                                   .collection('user')
                                   .doc(users[index].id);
                               docUser.delete();
+                              final imagDoc = FirebaseStorage.instance
+                                  .refFromURL(users[index].imageUrl);
+
+                              imagDoc.delete();
                             },
-                            icon: Icon(Icons.delete))
+                            icon: Icon(Icons.delete)),
+                        CircleAvatar(
+                          child: Text('${users[index].age}',
+                              style: TextStyle(
+                                color: Colors.black,
+                              )),
+                        )
                       ],
                     ),
                   );
@@ -88,9 +99,10 @@ class UseerScreen extends StatelessWidget {
 //           ],
 //         ),
 //       );
-  Stream<List<User>> ReadUser() => FirebaseFirestore.instance
+ 
+}
+ Stream<List<User>> ReadUser() => FirebaseFirestore.instance
       .collection('user')
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
-}
