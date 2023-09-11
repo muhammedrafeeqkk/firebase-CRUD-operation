@@ -99,10 +99,8 @@ class UseerScreen extends StatelessWidget {
 //           ],
 //         ),
 //       );
- 
 }
- Stream<List<User>> ReadUser() => FirebaseFirestore.instance
-      .collection('user')
-      .snapshots()
-      .map((snapshot) =>
-          snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
+
+Stream<List<User>> ReadUser() =>
+    FirebaseFirestore.instance.collection('user').snapshots().map((snapshot) =>
+        snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());

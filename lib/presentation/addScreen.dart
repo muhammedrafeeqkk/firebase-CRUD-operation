@@ -77,6 +77,8 @@ class _AddScreenState extends State<AddScreen> {
                         await getImage(ImageSource.gallery);
 
                         await uploadPick();
+                        final resuuu = await uploadPick();
+                        print(resuuu);
                       },
                       icon: Icon(
                         Icons.add_a_photo,

@@ -61,100 +61,102 @@ class _EditScreenState extends State<EditScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(18.0),
-              child: Stack(children: [
-                CircleAvatar(
-                  backgroundImage: (_image == null)
-                      ? NetworkImage(users[widget.index].imageUrl)
-                      : FileImage(_image!) as ImageProvider,
-                  //
-                  radius: 70,
-                ),
-                IconButton(
-                    onPressed: () async {
-                      getImage(ImageSource.gallery);
-
-                      final result = await updatePick();
-
-                      // final DocUser = FirebaseStorage.instance
-                      //     .refFromURL(users[widget.index].imageUrl);
-                      //     final newpath =  getImage(ImageSource.gallery);
-                      //     DocUser.updateMetadata();
-                    },
-                    icon: Icon(Icons.add_a_photo))
-              ]),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                controller: editedNameContoller,
-                decoration: InputDecoration(
-                  // alignLabelWithHint: true,
-                  label: Text(
-                    editedNameContoller.text,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(18.0),
+                child: Stack(children: [
+                  CircleAvatar(
+                    backgroundImage: (_image == null)
+                        ? NetworkImage(users[widget.index].imageUrl)
+                        : FileImage(_image!) as ImageProvider,
+                    //
+                    radius: 70,
                   ),
-                  hintText: editedNameContoller.text,
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(10))),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                keyboardType: TextInputType.number,
-                controller: editedAgeController,
-                decoration: InputDecoration(
-                  labelText: editedAgeController.text,
-                  hintText: editedAgeController.text,
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(10))),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                keyboardType: TextInputType.phone,
-                controller: editedPhoneController,
-                decoration: InputDecoration(
-                  labelText: editedPhoneController.text,
-                  hintText: editedPhoneController.text,
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(10))),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: FloatingActionButton.extended(
-                onPressed: () async {
-                  final url = await updatePick();
-                  final docUser = FirebaseFirestore.instance
-                      .collection('user')
-                      .doc(users[widget.index].id);
-                  docUser.update({
-                    'imageUrl': url,
-                    'name': editedNameContoller.text,
-                    'age': int.parse(editedAgeController.text),
-                    'phone': int.parse(editedPhoneController.text),
-                  });
+                  IconButton(
+                      onPressed: () async {
+                        getImage(ImageSource.gallery);
 
-                  Navigator.pop(context);
-                },
-                label: Icon(Icons.update),
+                        final result = await updatePick();
+
+                        // final DocUser = FirebaseStorage.instance
+                        //     .refFromURL(users[widget.index].imageUrl);
+                        //     final newpath =  getImage(ImageSource.gallery);
+                        //     DocUser.updateMetadata();
+                      },
+                      icon: Icon(Icons.add_a_photo))
+                ]),
               ),
-            )
-          ],
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: editedNameContoller,
+                  decoration: InputDecoration(
+                    // alignLabelWithHint: true,
+                    label: Text(
+                      editedNameContoller.text,
+                    ),
+                    hintText: editedNameContoller.text,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(10))),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  controller: editedAgeController,
+                  decoration: InputDecoration(
+                    labelText: editedAgeController.text,
+                    hintText: editedAgeController.text,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(10))),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  keyboardType: TextInputType.phone,
+                  controller: editedPhoneController,
+                  decoration: InputDecoration(
+                    labelText: editedPhoneController.text,
+                    hintText: editedPhoneController.text,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(10))),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(28.0),
+                child: FloatingActionButton.extended(
+                  onPressed: () async {
+                    final url = await updatePick();
+                    final docUser = FirebaseFirestore.instance
+                        .collection('user')
+                        .doc(users[widget.index].id);
+                    docUser.update({
+                      'imageUrl': url,
+                      'name': editedNameContoller.text,
+                      'age': int.parse(editedAgeController.text),
+                      'phone': int.parse(editedPhoneController.text),
+                    });
+
+                    Navigator.pop(context);
+                  },
+                  label: Icon(Icons.update),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
